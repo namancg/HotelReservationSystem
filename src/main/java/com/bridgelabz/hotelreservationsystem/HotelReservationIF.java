@@ -7,6 +7,7 @@ public interface HotelReservationIF {
 	public void addHotel(String hotelName, double weekdayCustomerCost, double weekendCustomerCost, int rating);
 	public int getHotelListSize();
 	public void printHotelList();
-	public String getCheapestHotel(LocalDate startDate, LocalDate endDate);
+	public ArrayList<Hotel> getCheapestHotel(LocalDate startDate, LocalDate endDate);
 	public ArrayList<Hotel> getHotelList();
+	public Hotel getCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate);
 }
