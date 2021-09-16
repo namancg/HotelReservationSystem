@@ -31,6 +31,9 @@ public class HotelReservationSystem implements HotelReservationIF {
 		Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getRegularCustomerCost));
 		return sortedHotelList.get();
 	}
+	public ArrayList<Hotel> getHotelList(){
+		return hotelList;
+	}
 
 	
 }
