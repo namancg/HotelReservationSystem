@@ -2,13 +2,11 @@ package com.bridgelabz.hotelreservationsystem;
 
 public class Hotel {
 	private String hotelName;
-	private int rating;
 	private double regularCustomerCost;
 	public Hotel() {
 	}
 	public Hotel(String hotelName, int rating, double regularCustomerCost) {
 		this.hotelName = hotelName;
-		this.rating = rating;
 		this.regularCustomerCost = regularCustomerCost;
 	}
 	public String getHotelName() {
@@ -25,6 +23,6 @@ public class Hotel {
 	}
 	@Override
 	public String toString() {
-		return "Hotels [hotelName=" + hotelName + ", rating=" + rating + ", Regular Customer Cost="+ regularCustomerCost +"]\n";
+		return "Hotels [hotelName=" + hotelName + ",Regular Customer Cost="+ regularCustomerCost +"]\n";
 	}
 }
