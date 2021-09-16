@@ -67,6 +67,45 @@ public class HotelReservationSystemTest {
 		Hotel hotel = hotelReservation.getBestRatedHotel(startDate, endDate);
 		Assert.assertEquals("Ridgewood", hotel.getHotelName());
 	}
+	@Test
+	public void givenHotelDetails_WhenNull_ShouldThrowHotelReservationException() {
+		
+		
+		try {
+			HotelReservationSystem hotelReservation = new HotelReservationSystem();
+			hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+			hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+			hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
+			LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+			LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+			hotelReservation.getCheapestBestRatedHotel( startDate, endDate);
+		}
+		catch(HotelReservationSystemException e){
+			Assert.assertEquals(HotelReservationSystemException.ExceptionType.ENTERED_NULL, e.type);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void givenHotelDetails_WhenEmpty_ShouldThrowHotelReservationException() {
+		
+		
+		try {
+			HotelReservationSystem hotelReservation = new HotelReservationSystem();
+			hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+			hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+			hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
+			LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+			LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+			hotelReservation.getCheapestBestRatedHotel( startDate, endDate);
+		}
+		catch(HotelReservationSystemException e){
+			Assert.assertEquals(HotelReservationSystemException.ExceptionType.ENTERED_EMPTY, e.type);
+			e.printStackTrace();
+		}
+		
+	}
 
 	
 }
