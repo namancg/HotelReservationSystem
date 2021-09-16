@@ -12,6 +12,7 @@ public class HotelReservationSystem implements HotelReservationIF {
 	Hotel hotel;
 	double totalRate = 0;
 	public static double cheapestPrice;
+	Scanner sc= new Scanner(System.in);
 
 	public void addHotel(String hotelName,  double weekdayCustomerCost, double weekendCustomerCost, int rating, double weekdayRewardCost, double weekendRewardCost) {
 		
@@ -127,6 +128,32 @@ public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate)
 	catch(NullPointerException e) {
 		throw new HotelReservationSystemException(ExceptionType.ENTERED_NULL, "NULL Value Entered");
 	}
+}
+public String getDates()
+{
+	System.out.println("Enter Date in YYYY-MM-DD format = ");
+	String date = sc.next();
+	boolean isValid = validateDate(date);
+	if(isValid)
+		return date;
+	return null;
+}
+
+public boolean validateDate(String date) {
+	
+	try {
+		if(date.length() == 0)
+			throw new HotelReservationSystemException(ExceptionType.ENTERED_EMPTY, "EMPTY value entered");
+		
+		String dateRegEx = "^([0-9]{4})[\\-]((0[1-9])|1[012])[\\-]([012][0-9]|[3][01])$";
+		return date.matches(dateRegEx);
+	}
+	catch(NullPointerException e) 
+	{
+		throw new HotelReservationSystemException(ExceptionType.ENTERED_NULL, "NULL value entered");
+	}
+	
+	
 }
 	
 }
