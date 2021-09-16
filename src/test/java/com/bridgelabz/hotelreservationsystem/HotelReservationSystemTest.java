@@ -10,9 +10,9 @@ public class HotelReservationSystemTest {
 	{
 
 		HotelReservationIF hotelReservation = new HotelReservationSystem();
-		hotelReservation.addHotel("Lakewood",  110, 90, 3);
-		hotelReservation.addHotel("Bridgewood", 150, 50, 4);
-		hotelReservation.addHotel("Ridgewood", 220,150, 5);
+		hotelReservation.addHotel("Lakewood",110,90,3);
+		hotelReservation.addHotel("Bridgewood",150,50,4);
+		hotelReservation.addHotel("Ridgewood",220,150,5);
 		int hotelListSize = hotelReservation.getHotelListSize();
 		hotelReservation.printHotelList();
 		Assert.assertEquals(3, hotelListSize);
@@ -21,8 +21,8 @@ public class HotelReservationSystemTest {
 	public void givenHotelDetails_shouldReturnCheapestHotel(){
 		
 		HotelReservationSystem hotelReservation = new HotelReservationSystem();
-		hotelReservation.addHotel("Lakewood", 110,90, 3);
-		hotelReservation.addHotel("Bridgewood", 150,50, 4);
+		hotelReservation.addHotel("Lakewood",110,90,3);
+		hotelReservation.addHotel("Bridgewood",150,50,4);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);    
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
 		ArrayList<Hotel> hotel = hotelReservation.getCheapestHotel(startDate, endDate);
@@ -54,6 +54,18 @@ public class HotelReservationSystemTest {
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
 		Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
 		Assert.assertEquals("Bridgewood", hotel.getHotelName());
+	}
+	@Test
+	public void givenHotelDetails_shouldReturnHighestRatedHotel(){
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		hotelReservation.addHotel("Lakewood", 3, 110, 90);
+		hotelReservation.addHotel("Bridgewood", 4, 150, 50);
+		hotelReservation.addHotel("Ridgewood", 5, 220, 150);
+		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);    
+		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
+		Hotel hotel = hotelReservation.getBestRatedHotel(startDate, endDate);
+		Assert.assertEquals("Ridgewood", hotel.getHotelName());
 	}
 
 	
