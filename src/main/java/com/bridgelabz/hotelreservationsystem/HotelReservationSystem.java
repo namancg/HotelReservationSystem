@@ -11,13 +11,15 @@ public class HotelReservationSystem implements HotelReservationIF {
 	double totalRate = 0;
 	public static double cheapestPrice;
 
-	public void addHotel(String hotelName,  double weekdayCustomerCost, double weekendCustomerCost, int rating) {
+	public void addHotel(String hotelName,  double weekdayCustomerCost, double weekendCustomerCost, int rating, double weekdayRewardCost, double weekendRewardCost) {
 		
 		hotel = new Hotel();
 		hotel.setHotelName(hotelName);
 		hotel.setWeekdayCustomerCost(weekdayCustomerCost);
 		hotel.setWeekendCustomerCost(weekendCustomerCost);
 		hotel.setRating(rating);
+		hotel.setWeekdayRewardCost(weekdayRewardCost);
+		hotel.setWeekendRewardCost(weekendRewardCost);
 		hotelList.add(hotel);	
 	}
 
@@ -108,9 +110,6 @@ public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate) {
 	System.out.println("Best Rated Hotel =" + sortedHotelList.get().getHotelName() + ", Rates: " + totalPrice);
 	return sortedHotelList.get();
 }
-
-
-
 	
 }
 
