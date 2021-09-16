@@ -5,6 +5,8 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.DayOfWeek;
 import java.util.stream.Collectors;
+
+import com.bridgelabz.hotelreservationsystem.HotelReservationSystemException.ExceptionType;
 public class HotelReservationSystem implements HotelReservationIF {
 	ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
 	Hotel hotel;
@@ -33,7 +35,9 @@ public class HotelReservationSystem implements HotelReservationIF {
 		System.out.println(hotelList);
 		
 	}
-	public ArrayList<Hotel> getCheapestHotel(LocalDate startDate, LocalDate endDate) {
+	public ArrayList<Hotel> getCheapestHotel(LocalDate startDate, LocalDate endDate) 
+	{
+		try {
 
 		int numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
         int weekends = 0;
@@ -67,15 +71,24 @@ public class HotelReservationSystem implements HotelReservationIF {
 	}
 		return null;
 	}
+		catch(NullPointerException e) {
+			throw new HotelReservationSystemException(ExceptionType.ENTERED_NULL, "NULL Value Entered");
+		}	
+	}
 	public ArrayList<Hotel> getHotelList(){
 		return hotelList;
 	}
 public Hotel getCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate)
 	{
+	try {
 		ArrayList<Hotel> cheapestHotels = getCheapestHotel(startDate, endDate);
 		Optional<Hotel> sortedHotelList = cheapestHotels.stream().max(Comparator.comparing(Hotel::getRating));
 		System.out.println("Cheapest and Best Rated Hotel :" + sortedHotelList.get().getHotelName() + ", Total Rates: " + cheapestPrice);
 		return sortedHotelList.get();
+	}
+	catch(NullPointerException e) {
+		throw new HotelReservationSystemException(ExceptionType.ENTERED_NULL, "NULL Value Entered");
+	}
 	}
 private ArrayList<Integer> getDurationOfStayDetails(LocalDate startDate, LocalDate endDate) {
 	int numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
@@ -100,8 +113,9 @@ private ArrayList<Integer> getDurationOfStayDetails(LocalDate startDate, LocalDa
 	
 }	
 
-public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate) {
-	
+public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate) 
+{
+	try {
 	ArrayList<Integer> durationDetails = getDurationOfStayDetails(startDate, endDate);
 	int weekdaysNumber = durationDetails.get(0);
 	int weekendsNumber = durationDetails.get(1);		
@@ -109,6 +123,10 @@ public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate) {
 	double totalPrice = weekdaysNumber*sortedHotelList.get().getWeekdayCustomerCost()+ weekendsNumber*sortedHotelList.get().getWeekendCustomerCost();
 	System.out.println("Best Rated Hotel =" + sortedHotelList.get().getHotelName() + ", Rates: " + totalPrice);
 	return sortedHotelList.get();
+}
+	catch(NullPointerException e) {
+		throw new HotelReservationSystemException(ExceptionType.ENTERED_NULL, "NULL Value Entered");
+	}
 }
 	
 }
