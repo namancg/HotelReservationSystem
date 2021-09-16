@@ -88,9 +88,8 @@ public class HotelReservationSystemTest {
 	}
 	
 	@Test
-	public void givenHotelDetails_WhenEmpty_ShouldThrowHotelReservationException() {
-		
-		
+	public void givenHotelDetails_WhenEmpty_ShouldThrowHotelReservationException()
+	{
 		try {
 			HotelReservationSystem hotelReservation = new HotelReservationSystem();
 			hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
@@ -105,6 +104,74 @@ public class HotelReservationSystemTest {
 			e.printStackTrace();
 		}
 		
+	}
+	@Test
+	public void givenDate_WhenProper_ShouldReturnTrue() {
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		boolean isValid = hotelReservation.validateDate("2009-12-13");
+		Assert.assertEquals(isValid, true);
+	}
+	
+	@Test
+	public void givenDate_WhenNotProperFormatPresent_ShouldReturnFalse() {
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		boolean isValid = hotelReservation.validateDate("28-07-1999");
+		Assert.assertEquals(isValid, false);
+	}
+	
+	@Test
+	public void givenDate_WhenSeperatedBySlashesPresent_ShouldReturnFalse() {
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		boolean isValid = hotelReservation.validateDate("1976/10/2021");
+		Assert.assertEquals(isValid, false);
+	}
+	
+	@Test
+	public void givenDate_WhenContainsCharctersPresent_ShouldReturnFalse() {
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		boolean isValid = hotelReservation.validateDate("200e-a-19");
+		Assert.assertEquals(isValid,false);
+	}
+	
+	@Test
+	public void givenDate_WhenSpecialCharctersPresent_ShouldReturnFalse() {
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		boolean isValid = hotelReservation.validateDate("2009/^$/13");
+		Assert.assertEquals(isValid,false);
+	}
+	
+	@Test
+	public void givenDate_WhenNull_ShouldThrowHotelReservationSystemException() {
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		try {
+			String date = null;
+			hotelReservation.validateDate(date);
+		}
+		catch(HotelReservationSystemException e){
+			Assert.assertEquals(HotelReservationSystemException.ExceptionType.ENTERED_NULL,e.type);
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void givenDate_WhenEmpty_ShouldThrowHotelReservationSystemException()
+	{
+		
+		HotelReservationSystem hotelReservation = new HotelReservationSystem();
+		try {
+			String date = "";
+			hotelReservation.validateDate(date);
+		}
+		catch(HotelReservationSystemException e){
+			Assert.assertEquals(HotelReservationSystemException.ExceptionType.ENTERED_EMPTY,e.type);
+			e.printStackTrace();
+		}
 	}
 
 	
