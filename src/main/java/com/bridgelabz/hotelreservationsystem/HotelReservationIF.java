@@ -11,4 +11,6 @@ public interface HotelReservationIF {
 	public ArrayList<Hotel> getHotelList();
 	public Hotel getCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate);
 	public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate);
+	public String getDates();
+	public boolean validateDate(String date);
 }
