@@ -6,11 +6,12 @@ public class HotelReservationSystem implements HotelReservationIF {
 	ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
 	Hotel hotel;
 
-	public void addHotel(String hotelName,  double regularCustomerRate) {
+	public void addHotel(String hotelName,  double weekdayCustomerCost, double weekendCustomerCost) {
 		
 		hotel = new Hotel();
 		hotel.setHotelName(hotelName);
-		hotel.setRegularCustomerCost(regularCustomerRate);
+		hotel.setWeekdayCustomerCost(weekdayCustomerCost);
+		hotel.setWeekendCustomerCost(weekendCustomerCost);
 		hotelList.add(hotel);	
 	}
 
@@ -30,6 +31,8 @@ public class HotelReservationSystem implements HotelReservationIF {
 		Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getRegularCustomerCost));
 		return sortedHotelList.get();
 	}
+
+	
 }
 
 
