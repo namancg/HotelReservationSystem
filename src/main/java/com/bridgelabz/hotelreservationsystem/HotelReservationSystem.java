@@ -11,12 +11,13 @@ public class HotelReservationSystem implements HotelReservationIF {
 	Hotel hotel;
 	double totalRate = 0;
 
-	public void addHotel(String hotelName,  double weekdayCustomerCost, double weekendCustomerCost) {
+	public void addHotel(String hotelName,  double weekdayCustomerCost, double weekendCustomerCost, int rating) {
 		
 		hotel = new Hotel();
 		hotel.setHotelName(hotelName);
 		hotel.setWeekdayCustomerCost(weekdayCustomerCost);
 		hotel.setWeekendCustomerCost(weekendCustomerCost);
+		hotel.setRating(rating);
 		hotelList.add(hotel);	
 	}
 
