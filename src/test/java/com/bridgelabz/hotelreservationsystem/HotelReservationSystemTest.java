@@ -18,18 +18,6 @@ public class HotelReservationSystemTest {
 		Assert.assertEquals(3, hotelListSize);
 	}
 	@Test
-	public void givenHotelDetails_shouldReturnCheapestHotel(){
-		
-		HotelReservationSystem hotelReservation = new HotelReservationSystem();
-		hotelReservation.addHotel("Lakewood",110,90,3,80,80);
-		hotelReservation.addHotel("Bridgewood",150,50,4,110,50);
-		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);    
-		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
-		ArrayList<Hotel> hotel = hotelReservation.getCheapestHotel(startDate, endDate);
-		String hotelName = hotel.get(0).getHotelName()+","+hotel.get(1).getHotelName();
-		Assert.assertEquals("Lakewood,Bridgewood", hotelName);
-	}
-	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekdayRegularCustomerCost(){
 		HotelReservationIF hotelReservation = new HotelReservationSystem();
 		hotelReservation.addHotel("Bridgewood", 150, 50, 4,110,50);
@@ -52,8 +40,18 @@ public class HotelReservationSystemTest {
 		hotelReservation.addHotel("Bridgewood", 150, 50,4,110,50);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);    
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
-		Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
-		Assert.assertEquals("Bridgewood", hotel.getHotelName());
+		String startDateValidation = startDate.toString();
+		String endDateValidation = endDate.toString();
+		boolean validStartDate = hotelReservation.validateDate(startDateValidation);
+		boolean validEndDate = hotelReservation.validateDate(endDateValidation);
+		if(validStartDate && validEndDate) {
+			Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate,"regular");
+			Assert.assertEquals("Bridgewood", hotel.getHotelName());
+		}	
+		else {
+			System.out.println("Not Valid");
+		}
+
 	}
 	@Test
 	public void givenHotelDetails_shouldReturnHighestRatedHotel(){
@@ -64,11 +62,21 @@ public class HotelReservationSystemTest {
 		hotelReservation.addHotel("Ridgewood", 5, 220, 150,100,40);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);    
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
-		Hotel hotel = hotelReservation.getBestRatedHotel(startDate, endDate);
-		Assert.assertEquals("Ridgewood", hotel.getHotelName());
+		String startDateValidation = startDate.toString();
+		String endDateValidation = endDate.toString();
+		boolean validStartDate = hotelReservation.validateDate(startDateValidation);
+		boolean validEndDate = hotelReservation.validateDate(endDateValidation);
+		if(validStartDate && validEndDate) {
+			Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate,"regular");
+			Assert.assertEquals("Ridgewood", hotel.getHotelName());
+		}	
+		else {
+			System.out.println("Not Valid ");
+		}
 	}
 	@Test
-	public void givenHotelDetails_WhenNull_ShouldThrowHotelReservationException() {
+	public void givenHotelDetails_WhenNull_ShouldThrowHotelReservationException() 
+	{
 		
 		
 		try {
@@ -78,7 +86,7 @@ public class HotelReservationSystemTest {
 			hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
 			LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
 			LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
-			hotelReservation.getCheapestBestRatedHotel( startDate, endDate);
+			hotelReservation.getCheapestBestRatedHotel( startDate, endDate, null);
 		}
 		catch(HotelReservationSystemException e){
 			Assert.assertEquals(HotelReservationSystemException.ExceptionType.ENTERED_NULL, e.type);
@@ -97,7 +105,7 @@ public class HotelReservationSystemTest {
 			hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
 			LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
 			LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
-			hotelReservation.getCheapestBestRatedHotel( startDate, endDate);
+			hotelReservation.getCheapestBestRatedHotel(startDate, endDate, "");
 		}
 		catch(HotelReservationSystemException e){
 			Assert.assertEquals(HotelReservationSystemException.ExceptionType.ENTERED_EMPTY, e.type);
@@ -114,7 +122,8 @@ public class HotelReservationSystemTest {
 	}
 	
 	@Test
-	public void givenDate_WhenNotProperFormatPresent_ShouldReturnFalse() {
+	public void givenDate_WhenNotProperFormatPresent_ShouldReturnFalse() 
+	{
 		
 		HotelReservationSystem hotelReservation = new HotelReservationSystem();
 		boolean isValid = hotelReservation.validateDate("28-07-1999");
@@ -122,7 +131,8 @@ public class HotelReservationSystemTest {
 	}
 	
 	@Test
-	public void givenDate_WhenSeperatedBySlashesPresent_ShouldReturnFalse() {
+	public void givenDate_WhenSeperatedBySlashesPresent_ShouldReturnFalse()
+	{
 		
 		HotelReservationSystem hotelReservation = new HotelReservationSystem();
 		boolean isValid = hotelReservation.validateDate("1976/10/2021");
@@ -130,7 +140,8 @@ public class HotelReservationSystemTest {
 	}
 	
 	@Test
-	public void givenDate_WhenContainsCharctersPresent_ShouldReturnFalse() {
+	public void givenDate_WhenContainsCharctersPresent_ShouldReturnFalse() 
+	{
 		
 		HotelReservationSystem hotelReservation = new HotelReservationSystem();
 		boolean isValid = hotelReservation.validateDate("200e-a-19");
@@ -146,7 +157,8 @@ public class HotelReservationSystemTest {
 	}
 	
 	@Test
-	public void givenDate_WhenNull_ShouldThrowHotelReservationSystemException() {
+	public void givenDate_WhenNull_ShouldThrowHotelReservationSystemException() 
+	{
 		
 		HotelReservationSystem hotelReservation = new HotelReservationSystem();
 		try {
